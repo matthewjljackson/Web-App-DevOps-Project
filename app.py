@@ -39,6 +39,7 @@ Base = declarative_base()
 class Order(Base):
     __tablename__ = 'orders'
     date_uuid = Column('date_uuid', String, primary_key=True)
+    delivery_date = Column('Delivery Date', DateTime)
     user_id = Column('User ID', String, primary_key=True)
     card_number = Column('Card Number', String)
     store_code = Column('Store Code', String)
@@ -78,6 +79,7 @@ def display_orders():
 @app.route('/add_order', methods=['POST'])
 def add_order():
     date_uuid = request.form.get('date_uuid')
+    delivery_date = request.form['delivery_date']
     user_id = request.form.get('user_id')
     card_number = request.form.get('card_number')
     store_code = request.form.get('store_code')
@@ -92,6 +94,7 @@ def add_order():
     # Create a new order object using the form data
     new_order = Order(
         date_uuid=date_uuid,
+        delivery_date=delivery_date,
         user_id=user_id,
         card_number=card_number,
         store_code=store_code,
