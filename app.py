@@ -3,6 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
+import urllib.parse
 import pyodbc
 import os
 
@@ -14,7 +15,7 @@ server = 'devops-project-server.database.windows.net'
 database = 'orders-db'
 username = 'maya'
 password = 'AiCore1237'
-driver= '{ODBC Driver 18 for SQL Server}'
+driver= 'ODBC Driver 18 for SQL Server'
 
 # Create the connection string
 connection_string=f'Driver={driver};\
@@ -26,8 +27,11 @@ connection_string=f'Driver={driver};\
     TrustServerCertificate=no;\
     Connection Timeout=30;'
 
+# URL-encode the connection string
+encoded_connection_string = urllib.parse.quote_plus(connection_string)
+
 # Create the engine to connect to the database
-engine = create_engine("mssql+pyodbc:///?odbc_connect={}".format(connection_string))
+engine = create_engine(f"mssql+pyodbc:///?odbc_connect={encoded_connection_string}")
 engine.connect()
 
 # Create the Session
@@ -109,4 +113,4 @@ def add_order():
 
 # run the app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
