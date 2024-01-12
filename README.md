@@ -60,3 +60,61 @@ To run the application, you simply need to run the `app.py` script in this repos
 ## License
 
 This project is licensed under the MIT License. For more details, refer to the [LICENSE](LICENSE) file.
+
+
+
+## Delivery Date
+
+In commit 3f8847458624e86993c9cb8ba97b1801b6c58b02 a delivery date was added to orders
+
+- a delivery date was added to the table to see the value of this order property
+- it was also added as a new input to the form
+- this value would be returned in the get order route
+
+## Docker
+
+### Process
+
+The containerization process involved initialising a Docker file with the following:
+
+- parent python image
+- our application code
+- installing dependancies for connecting to the db
+- installing dependancies for used by the application
+- exposing a port
+- command for running the application
+
+### Commands used
+
+- docker build -t devops-image .
+- docker run -p 5001:5001 devops-image
+- docker login
+- docker tag devops-image:latest matthewjljackson/devops-image:latest
+- docker push matthewjljackson/devops-image:latest
+
+## terraform
+
+### Networking
+
+#### variables
+
+- resource_group_name
+- location
+- vnet_address_space
+
+#### resources
+
+- A resource group was created to contain our networking resources
+- A VNet was created to be used by the AKS cluster
+- We created 2 subnets for use by the control plane and worker nodes
+- A NSG was created with 2 rules:
+  - 1 to allow inbound traffic to kube-apiserver from my ip-address
+  - 1 to allow inbound traffic for SSH
+
+#### outputs
+
+- vnet_id
+- control_plane_subnet_id
+- worker_node_subnet_id
+- resource_group_name
+- aks_nsg_id
