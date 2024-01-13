@@ -118,3 +118,28 @@ The containerization process involved initialising a Docker file with the follow
 - worker_node_subnet_id
 - resource_group_name
 - aks_nsg_id
+
+### Cluster Module
+
+#### variables
+
+- aks_cluster_name
+- cluster_location
+- dns_prefix
+- kubernetes_version
+- service_principal_client_id
+- service_principal_secret
+- vnet_id
+- control_plane_subnet_id
+- worker_node_subnet_id
+- resource_group_name
+
+#### resources
+
+- Here we define the AKS cluster, using the variables, with a default node pool for the cluster. We also define a service principal to handle authentication.
+
+#### outputs
+
+- aks_cluster_name
+- aks_cluster_id
+- aks_kubeconfig
