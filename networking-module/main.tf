@@ -7,14 +7,6 @@ terraform {
     }
 }
 
-provider "azurerm" {
-    features {}
-    client_id       = ""
-    client_secret   = ""
-    subscription_id = ""
-    tenant_id       = ""
-}
-
 resource "azurerm_resource_group" "networking" {
     name = var.resource_group_name
     location = var.location

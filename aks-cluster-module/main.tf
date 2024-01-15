@@ -7,14 +7,6 @@ terraform {
     }
 }
 
-provider "azurerm" {
-    features {}
-    client_id       = ""
-    client_secret   = ""
-    subscription_id = ""
-    tenant_id       = ""
-}
-
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
     name                = var.aks_cluster_name
     location            = var.cluster_location

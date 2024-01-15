@@ -143,3 +143,9 @@ The containerization process involved initialising a Docker file with the follow
 - aks_cluster_name
 - aks_cluster_id
 - aks_kubeconfig
+
+### Creating the cluster
+
+- In the root of the repo we set up the main.tf which uses a provider for Azure authentication and where we use our networking and cluster module.
+- Once correctly configured we can use `terraform apply` to create the resources in Azure.
+- terraform.tfvars was used for environment variables used by the provider and the file was added to the .gitignore in order to not leak personal data.
