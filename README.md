@@ -149,3 +149,11 @@ The containerization process involved initialising a Docker file with the follow
 - In the root of the repo we set up the main.tf which uses a provider for Azure authentication and where we use our networking and cluster module.
 - Once correctly configured we can use `terraform apply` to create the resources in Azure.
 - terraform.tfvars was used for environment variables used by the provider and the file was added to the .gitignore in order to not leak personal data.
+
+### AKS Deployment
+
+- I created our `application-manifest.yaml` file with 2 key features:
+  - A `flask-app-service` for routing internal communication
+  - A `flask-app-deployment` for our application code
+- I then ran `kubectl apply -f application-manifest.yaml` to execute the k8s code
+- I then ran `kubectl port-forward deployment/flask-app-deployment 5001:5001` to test the application locally
