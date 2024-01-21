@@ -17,6 +17,7 @@ resource "azurerm_virtual_network" "aks_vnet" {
     address_space       = var.vnet_address_space
     location            = azurerm_resource_group.networking.location
     resource_group_name = azurerm_resource_group.networking.name
+    depends_on          = [azurerm_resource_group.networking]
 }
 
 resource "azurerm_subnet" "control_plane_subnet" {
@@ -24,6 +25,7 @@ resource "azurerm_subnet" "control_plane_subnet" {
     resource_group_name  = azurerm_resource_group.networking.name
     virtual_network_name = azurerm_virtual_network.aks_vnet.name
     address_prefixes     = ["10.0.1.0/24"]
+    depends_on           = [azurerm_virtual_network.aks_vnet]
 }
 
 resource "azurerm_subnet" "worker_node_subnet" {
@@ -31,12 +33,14 @@ resource "azurerm_subnet" "worker_node_subnet" {
     resource_group_name  = azurerm_resource_group.networking.name
     virtual_network_name = azurerm_virtual_network.aks_vnet.name
     address_prefixes     = ["10.0.2.0/24"]
+    depends_on           = [azurerm_virtual_network.aks_vnet]
 }
 
 resource "azurerm_network_security_group" "aks_nsg" {
     name                = "aks-nsg"
     location            = azurerm_resource_group.networking.location
     resource_group_name = azurerm_resource_group.networking.name
+    depends_on          = [azurerm_virtual_network.aks_vnet]
 }
 
 resource "azurerm_network_security_rule" "kube_apiserver" {
@@ -51,6 +55,7 @@ resource "azurerm_network_security_rule" "kube_apiserver" {
     destination_address_prefix  = "*"
     resource_group_name         = azurerm_resource_group.networking.name
     network_security_group_name = azurerm_network_security_group.aks_nsg.name
+    depends_on                  = [azurerm_network_security_group.aks_nsg]
 }
 
 resource "azurerm_network_security_rule" "ssh" {
@@ -65,4 +70,5 @@ resource "azurerm_network_security_rule" "ssh" {
     destination_address_prefix  = "*"
     resource_group_name         = azurerm_resource_group.networking.name
     network_security_group_name = azurerm_network_security_group.aks_nsg.name
+    depends_on                  = [azurerm_network_security_group.aks_nsg]
 }

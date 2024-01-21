@@ -19,14 +19,14 @@ provider "azurerm" {
 module "networking_module" {
     source              = "./networking-module"
     resource_group_name = "networking-resource-group"
-    location            = "UK South"
+    location            = var.module_location
     vnet_address_space  = ["10.0.0.0/16"]
 }
 
 module "cluster_module" {
     source                      = "./aks-cluster-module"
     aks_cluster_name            = "terraform-aks-cluster"
-    cluster_location            = "UK South"
+    cluster_location            = var.module_location
     dns_prefix                  = "myaks-project"
     kubernetes_version          = "1.26.6"
     service_principal_client_id = var.client_id
@@ -35,4 +35,5 @@ module "cluster_module" {
     control_plane_subnet_id     = module.networking_module.control_plane_subnet_id
     worker_node_subnet_id       = module.networking_module.worker_node_subnet_id
     resource_group_name         = module.networking_module.resource_group_name
+    depends_on                  = [module.networking_module]
 }
