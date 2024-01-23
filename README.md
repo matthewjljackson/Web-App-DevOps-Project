@@ -157,3 +157,12 @@ The containerization process involved initialising a Docker file with the follow
   - A `flask-app-deployment` for our application code
 - I then ran `kubectl apply -f application-manifest.yaml` to execute the k8s code
 - I then ran `kubectl port-forward deployment/flask-app-deployment 5001:5001` to test the application locally
+
+## Azure DevOps
+
+- I initialised an azure devops project and set up a pipeline by first using the github integration to connect to the working repository.
+- using the pipeline UI, I then configured the pipeline to:
+  - trigger when code is merged into main branch
+  - build and push the dockerfile to docker hub
+  - and finally deploy the app to the AKS environment using the k8s integration
+- to validate this process I made changes to the codebase and checked to see if they'd been successfully updated once the pipeline finished running.
