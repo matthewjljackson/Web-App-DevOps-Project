@@ -166,3 +166,9 @@ The containerization process involved initialising a Docker file with the follow
   - build and push the dockerfile to docker hub
   - and finally deploy the app to the AKS environment using the k8s integration
 - to validate this process I made changes to the codebase and checked to see if they'd been successfully updated once the pipeline finished running.
+
+## AKS Cluster Monitoring
+
+- I created a dashboard for cluster metrics with some useful graphs such as average node CPU usage
+- I also saved some logs for future use in Azure Log Analytics
+- Finally I set up alerts, which triggers an email, for essential concerns such as when memory usage goes above 80%
